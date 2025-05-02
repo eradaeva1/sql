@@ -55,8 +55,40 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 
 ```
 Your answer...
-```
 
+Option 1: Overwrite (Type 1 Slowly Changing Dimension)
+This is the simpler version. Every customer has just one row in the customer_address table, and whenever they move, we update that row with the new address.
+
+CREATE TABLE customer_address (
+  customer_id INTEGER PRIMARY KEY,
+  street TEXT,
+  city TEXT,
+  province TEXT,
+  postal_code TEXT
+);
+Pros: Simple and easy to maintain.
+Cons: We lose the old address — there’s no history.
+This is known as a Type 1 Slowly Changing Dimension because it just overwrites the previous value.
+
+```
+Option 2: Retain History (Type 2 Slowly Changing Dimension)
+This approach is more detailed. Instead of updating a single row, we insert a new row every time a customer changes their address. That way, we can keep a record of where they used to live, when they lived there, and what their current address is.
+
+CREATE TABLE customer_address (
+  address_id INTEGER PRIMARY KEY,
+  customer_id INTEGER,
+  street TEXT,
+  city TEXT,
+  province TEXT,
+  postal_code TEXT,
+  start_date TEXT,
+  end_date TEXT,
+  is_current BOOLEAN
+);
+Pros: We preserve full history — helpful for auditing, marketing, or tracking long-term customers.
+Cons: Slightly more complex to query and update.
+
+This is a Type 2 Slowly Changing Dimension because it tracks changes over time as separate records
 ***
 
 ## Section 2:

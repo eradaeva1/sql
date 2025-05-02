@@ -70,7 +70,6 @@ Pros: Simple and easy to maintain.
 Cons: We lose the old address — there’s no history.
 This is known as a Type 1 Slowly Changing Dimension because it just overwrites the previous value.
 
-```
 Option 2: Retain History (Type 2 Slowly Changing Dimension)
 This approach is more detailed. Instead of updating a single row, we insert a new row every time a customer changes their address. That way, we can keep a record of where they used to live, when they lived there, and what their current address is.
 
@@ -89,6 +88,9 @@ Pros: We preserve full history — helpful for auditing, marketing, or tracking 
 Cons: Slightly more complex to query and update.
 
 This is a Type 2 Slowly Changing Dimension because it tracks changes over time as separate records
+
+```
+
 ***
 
 ## Section 2:
